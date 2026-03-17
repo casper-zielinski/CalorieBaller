@@ -6,9 +6,7 @@ struct CalorieBallerView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 25) {
                 Header()
-
-               Calendar()
-
+                Calendar()
                 Statistics()
                 DishList()
             }
