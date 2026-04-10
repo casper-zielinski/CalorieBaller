@@ -26,7 +26,10 @@ struct CalendarStrip: View {
                 .padding(.vertical, 10)
                 .background(selectedDay == day ? Color.gray.opacity(0.5) : Color.clear)
                 .cornerRadius(12)
-                .onTapGesture { selectedDay = day }
+                .onTapGesture {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    selectedDay = day
+                }
             }
         }
         .padding(.horizontal)
@@ -36,8 +39,10 @@ struct CalendarStrip: View {
                     guard let index = days.firstIndex(of: selectedDay) else { return }
                     if value.translation.width < -30, index < days.count - 1 {
                         selectedDay = days[index + 1]
+                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                     } else if value.translation.width > 30, index > 0 {
                         selectedDay = days[index - 1]
+                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                     }
                 }
         )

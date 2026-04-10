@@ -18,7 +18,7 @@ struct DishList: View {
 
             VStack(spacing: 15) {
                 ForEach(day.dishes, id: \.name) { dish in
-                    DishRow(name: dish.name, cal: "\(Int(dish.calories)) kcal", icon: dish.icon)
+                    DishRow(dish: dish)
                 }
             }
             .padding(.horizontal)
