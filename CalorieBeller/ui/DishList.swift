@@ -7,17 +7,19 @@
 
 import SwiftUI
 
-struct DishList : View {
+struct DishList: View {
+    let day: Day
+
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Today's Dishes")
+            Text("\(day.label)'s Dishes")
                 .font(.headline)
                 .padding(.horizontal)
-            
+
             VStack(spacing: 15) {
-                DishRow(name: "Oatmeal mit Beeren", cal: "450 kcal", icon: "🥣")
-                DishRow(name: "Hähnchen mit Reis", cal: "680 kcal", icon: "🍗")
-                DishRow(name: "Protein Shake", cal: "220 kcal", icon: "🥤")
+                ForEach(day.dishes, id: \.name) { dish in
+                    DishRow(name: dish.name, cal: "\(Int(dish.calories)) kcal", icon: dish.icon)
+                }
             }
             .padding(.horizontal)
         }

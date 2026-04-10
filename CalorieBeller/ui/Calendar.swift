@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-struct Calendar : View {
+struct CalendarStrip: View {
     let days = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
-    @State private var selectedDay = "Mi"
-    
+    @Binding var selectedDay: String
+
     var body: some View {
         HStack(alignment: .center) {
             ForEach(days, id: \.self) { day in
                 VStack(spacing: 8) {
                     Text(day)
                         .font(.caption).bold()
-                        .foregroundColor(selectedDay == day ? .white : .black)
+                        .foregroundColor(selectedDay == day ? .white : .primary)
                     Circle()
                         .fill(selectedDay == day ? Color.orange : Color.clear)
                         .frame(width: 8, height: 8)
@@ -30,5 +30,16 @@ struct Calendar : View {
             }
         }
         .padding(.horizontal)
+        .gesture(
+            DragGesture(minimumDistance: 30, coordinateSpace: .local)
+                .onEnded { value in
+                    guard let index = days.firstIndex(of: selectedDay) else { return }
+                    if value.translation.width < -30, index < days.count - 1 {
+                        selectedDay = days[index + 1]
+                    } else if value.translation.width > 30, index > 0 {
+                        selectedDay = days[index - 1]
+                    }
+                }
+        )
     }
 }
